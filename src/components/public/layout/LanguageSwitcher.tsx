@@ -49,13 +49,30 @@ export function LanguageSwitcher() {
       };
     }
 
+    const hideBanner = () => {
+      const banner = document.querySelector('.goog-te-banner-frame') as HTMLElement;
+      if (banner) {
+        banner.style.display = 'none';
+        banner.style.visibility = 'hidden';
+        banner.style.height = '0px';
+      }
+      if (document.body.style.top && document.body.style.top !== '0px') {
+        document.body.style.top = '0px';
+      }
+    };
+
+    const interval = setInterval(hideBanner, 200);
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const changeLanguage = (langCode: string) => {

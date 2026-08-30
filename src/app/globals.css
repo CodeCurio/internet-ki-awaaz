@@ -198,20 +198,43 @@
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-/* Google Translate Widget Overrides */
-.goog-te-banner-frame.skiptranslate {
+/* Comprehensive Google Translate Top Banner and Tooltip Suppression */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe[name*="goog-te"],
+iframe[id*="goog-te"],
+.goog-te-banner,
+#goog-gt-tt,
+#goog-gt-vt,
+.goog-te-balloon-frame,
+.goog-te-gadget,
+.goog-te-gadget-simple,
+.goog-te-combo,
+.goog-te-gadget-icon,
+.goog-tooltip,
+.goog-tooltip:hover,
+div#google_translate_element .goog-te-gadget {
   display: none !important;
+  visibility: hidden !important;
+  height: 0px !important;
+  width: 0px !important;
+  max-height: 0px !important;
+  max-width: 0px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
 }
 
 body {
   top: 0px !important;
+  position: static !important;
 }
 
-.goog-tooltip {
-  display: none !important;
-}
-
-.goog-tooltip:hover {
+body > .skiptranslate:first-child {
   display: none !important;
 }
 
