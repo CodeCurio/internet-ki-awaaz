@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Youtube, PlayCircle, Clock, Play, ExternalLink, Radio } from 'lucide-react';
 
-export const REAL_ALL_VIDEOS = [
+const REAL_ALL_VIDEOS = [
   {
     id: 'Kk-itjV99aI',
     youtubeId: 'Kk-itjV99aI',
