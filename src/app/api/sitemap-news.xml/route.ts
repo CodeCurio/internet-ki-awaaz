@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://internetkiawaaz.in';
 
@@ -12,7 +12,7 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const supabase: any = await createClient();
+  const supabase: any = await createPublicServerClient();
   const fortyEightHoursAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
 
   const { data: posts } = await supabase

@@ -34,13 +34,26 @@ export async function createClient() {
   );
 }
 
+// For public / static queries (does NOT touch cookies, completely safe for SSG, ISR, public layouts)
+export async function createPublicServerClient() {
+  const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_anon_key';
+  return createSupabaseClient<Database>(
+    url,
+    anonKey,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
+
 export async function createAdminClient() {
   const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder_service_role_key';
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_service_role_key';
   return createSupabaseClient<Database>(
     url,
     serviceKey,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
 }
+

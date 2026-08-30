@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 import { Clock, ChevronRight, Landmark, MapPin, Scroll, Megaphone, BookOpen, PlayCircle, Building2 } from 'lucide-react';
 import { formatRelativeHindiTime } from '@/lib/utils';
 
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const meta = CATEGORY_META[params.slug];
-  const supabase = await createClient();
+  const supabase = await createPublicServerClient();
 
   let posts: any[] = [];
   let categoryName = meta?.name_hi || params.slug;

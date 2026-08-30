@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient, createPublicServerClient } from '@/lib/supabase/server';
 import type { BreakingPriority } from '@/types/database.types';
 
 export interface PublishBreakingInput {
@@ -41,8 +41,8 @@ async function getSupabaseInstance() {
     // Continue
   }
 
-  // 3. Default to createClient (reads cookies from request)
-  return await createClient();
+  // 3. Default to public client
+  return await createPublicServerClient();
 }
 
 async function resolveAdminProfileId(supabase: any): Promise<string> {
@@ -164,20 +164,10 @@ export async function getAdminBreakingNews() {
 
 export async function getActiveBreakingNews() {
   try {
-    const supabase: any = await getSupabaseInstance();
+    const supabase: any = await createPublicServerClient();
     const now = new Date().toISOString();
 
-    // 1. Auto-clean / purge expired records from database
-    try {
-      await supabase
-        .from('breaking_news')
-        .delete()
-        .lt('expires_at', now);
-    } catch {
-      // Ignored
-    }
-
-    // 2. Fetch active and non-expired breaking news with linked post details
+    // Fetch active and non-expired breaking news with linked post details
     const { data, error } = await supabase
       .from('breaking_news')
       .select(`
@@ -198,7 +188,7 @@ export async function getActiveBreakingNews() {
       return data;
     }
 
-    // 3. Fallback: If no breaking news exists, fetch the top recent published articles (up to 3)
+    // Fallback: If no active breaking news exists, fetch the top recent published articles (up to 3)
     const { data: latestPosts } = await supabase
       .from('posts')
       .select('id, title_hi, slug, created_at, published_at')
@@ -225,7 +215,10 @@ export async function getActiveBreakingNews() {
     }
 
     return [];
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.digest === 'DYNAMIC_SERVER_USAGE') {
+      throw err;
+    }
     console.error('getActiveBreakingNews exception:', err);
     return [];
   }

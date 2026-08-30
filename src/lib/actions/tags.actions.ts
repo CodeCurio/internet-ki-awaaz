@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient, createPublicServerClient } from '@/lib/supabase/server';
 import { slugifyText } from '@/lib/utils';
 import type { TagRow } from '@/types/domain.types';
 
@@ -19,12 +19,13 @@ export interface TagActionResult {
 
 async function getSupabaseInstance(): Promise<any> {
   try {
-    const admin = await createAdminClient();
-    return admin;
-  } catch {
-    const client = await createClient();
-    return client;
-  }
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (serviceKey && serviceKey !== anonKey && !serviceKey.includes('placeholder')) {
+      return await createAdminClient();
+    }
+  } catch {}
+  return await createPublicServerClient();
 }
 
 export async function createTag(input: CreateTagInput): Promise<TagActionResult> {
@@ -104,19 +105,14 @@ export async function createTag(input: CreateTagInput): Promise<TagActionResult>
 
 export async function getTags(): Promise<TagRow[]> {
   try {
-    const supabase = await getSupabaseInstance();
+    const supabase = await createPublicServerClient();
     const { data, error } = await supabase
       .from('tags')
       .select('*')
       .order('usage_count', { ascending: false });
 
     if (error || !data) {
-      const userClient: any = await createClient();
-      const { data: userTags } = await userClient
-        .from('tags')
-        .select('*')
-        .order('usage_count', { ascending: false });
-      return (userTags as TagRow[]) || [];
+      return [];
     }
     return data as TagRow[];
   } catch {

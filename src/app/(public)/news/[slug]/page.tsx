@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 import { ArticleHeader } from '@/components/public/article/ArticleHeader';
 import { ArticleBody } from '@/components/public/article/ArticleBody';
 import { AuthorBylineCard } from '@/components/public/article/AuthorBylineCard';
@@ -62,7 +62,7 @@ const MOCK_ARTICLES: Record<string, any> = {
 
 async function getArticle(slug: string) {
   try {
-    const supabase = await createClient();
+    const supabase = await createPublicServerClient();
     const { data: post } = await supabase
       .from('posts')
       .select(`

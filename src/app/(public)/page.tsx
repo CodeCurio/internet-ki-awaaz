@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 import { HeroNewsGrid } from '@/components/public/home/HeroNewsGrid';
 import { CategoryDeskBlock } from '@/components/public/home/CategoryDeskBlock';
 import { VideoDeskCarousel } from '@/components/public/home/VideoDeskCarousel';
@@ -8,7 +8,7 @@ import { getLatestYouTubeVideos } from '@/lib/youtube/youtube-feed';
 export const revalidate = 60; // ISR revalidation every 60s
 
 export default async function HomePage() {
-  const supabase = await createClient();
+  const supabase = await createPublicServerClient();
   const latestYouTubeVideos = await getLatestYouTubeVideos(8);
 
   // Fetch published posts with relations

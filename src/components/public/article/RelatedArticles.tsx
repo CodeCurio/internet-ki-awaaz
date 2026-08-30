@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 import { Clock } from 'lucide-react';
 import { formatRelativeHindiTime } from '@/lib/utils';
 import type { PostWithRelations } from '@/types/domain.types';
@@ -41,7 +41,7 @@ export async function RelatedArticles({
   let relatedPosts: any[] = [];
 
   try {
-    const supabase = await createClient();
+    const supabase = await createPublicServerClient();
     let query = supabase
       .from('posts')
       .select(`

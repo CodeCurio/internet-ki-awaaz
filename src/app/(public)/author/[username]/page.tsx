@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 import { User, Shield, Clock, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { formatRelativeHindiTime } from '@/lib/utils';
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
 }
 
 export default async function AuthorProfilePage({ params }: AuthorPageProps) {
-  const supabase = await createClient();
+  const supabase = await createPublicServerClient();
 
   let author: any = {
     full_name_hi: 'राकेश त्रिपाठी',

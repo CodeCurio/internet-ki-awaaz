@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicServerClient } from '@/lib/supabase/server';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://internetkiawaaz.in';
 
@@ -25,7 +25,7 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const supabase: any = await createClient();
+  const supabase: any = await createPublicServerClient();
 
   const { data: posts } = await supabase
     .from('posts')

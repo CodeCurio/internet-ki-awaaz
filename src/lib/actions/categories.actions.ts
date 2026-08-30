@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient, createPublicServerClient } from '@/lib/supabase/server';
 import { slugifyText } from '@/lib/utils';
 import type { CategoryRow } from '@/types/domain.types';
 
@@ -22,10 +22,13 @@ export interface CategoryActionResult {
 
 async function getSupabaseInstance() {
   try {
-    return await createAdminClient();
-  } catch {
-    return await createClient();
-  }
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (serviceKey && serviceKey !== anonKey && !serviceKey.includes('placeholder')) {
+      return await createAdminClient();
+    }
+  } catch {}
+  return await createPublicServerClient();
 }
 
 export async function createCategory(input: CreateCategoryInput): Promise<CategoryActionResult> {
@@ -107,19 +110,14 @@ export async function createCategory(input: CreateCategoryInput): Promise<Catego
 
 export async function getCategories(): Promise<CategoryRow[]> {
   try {
-    const supabase: any = await getSupabaseInstance();
+    const supabase: any = await createPublicServerClient();
     const { data, error } = await supabase
       .from('categories')
       .select('*')
       .order('display_order', { ascending: true });
 
     if (error || !data) {
-      const userClient: any = await createClient();
-      const { data: uData } = await userClient
-        .from('categories')
-        .select('*')
-        .order('display_order', { ascending: true });
-      return (uData as CategoryRow[]) || [];
+      return [];
     }
     return data as CategoryRow[];
   } catch {
