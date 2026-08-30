@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-devanagari: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+    --font-latin: 'Inter', sans-serif;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased font-devanagari;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Custom scrollbar for news ticker and desk rails */
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* Breaking News Ticker Animation */
+@keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-ticker {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 35s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Prose mirroring for Hindi body typography */
+.prose {
+  color: #1e293b;
+  font-family: var(--font-devanagari);
+}
+
+.prose p {
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.prose h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  border-left: 4px solid #b91c1c;
+  padding-left: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose blockquote {
+  border-left: 4px solid #b91c1c;
+  padding-left: 1.25rem;
+  font-style: normal;
+  color: #334155;
+  background-color: #f8fafc;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.prose ul:not([data-type="taskList"]) {
+  list-style-type: disc;
+  padding-left: 1.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ul ul:not([data-type="taskList"]) {
+  list-style-type: circle;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.prose ul ul ul:not([data-type="taskList"]) {
+  list-style-type: square;
+}
+
+.prose ol ol {
+  list-style-type: lower-alpha;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.prose ol ol ol {
+  list-style-type: lower-roman;
+}
+
+/* Explicit list type overrides */
+.prose ul[data-list-style="disc"], .prose ul.list-disc { list-style-type: disc; }
+.prose ul[data-list-style="circle"], .prose ul.list-circle { list-style-type: circle; }
+.prose ul[data-list-style="square"], .prose ul.list-square { list-style-type: square; }
+
+.prose ol[data-list-style="decimal"], .prose ol.list-decimal { list-style-type: decimal; }
+.prose ol[data-list-style="devanagari"], .prose ol.list-devanagari { list-style-type: devanagari; }
+.prose ol[data-list-style="lower-alpha"], .prose ol.list-lower-alpha { list-style-type: lower-alpha; }
+.prose ol[data-list-style="upper-alpha"], .prose ol.list-upper-alpha { list-style-type: upper-alpha; }
+.prose ol[data-list-style="lower-roman"], .prose ol.list-lower-roman { list-style-type: lower-roman; }
+.prose ol[data-list-style="upper-roman"], .prose ol.list-upper-roman { list-style-type: upper-roman; }
+
+.prose li {
+  line-height: 1.8;
+  margin-bottom: 0.35rem;
+}
+
+/* Interactive Task Lists / Checklists */
+.prose ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ul[data-type="taskList"] li[data-type="taskItem"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+  list-style: none;
+}
+
+.prose ul[data-type="taskList"] li[data-type="taskItem"] > label {
+  flex: 0 0 auto;
+  margin-right: 0.25rem;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+.prose ul[data-type="taskList"] li[data-type="taskItem"] > div {
+  flex: 1 1 auto;
+}
+
+.prose ul[data-type="taskList"] input[type="checkbox"] {
+  cursor: pointer;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 0.25rem;
+  border: 1.5px solid #cbd5e1;
+  accent-color: #b91c1c;
+}
+
+.prose ul[data-type="taskList"] li[data-checked="true"] > div {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.prose img {
+  border-radius: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Google Translate Widget Overrides */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+.goog-tooltip {
+  display: none !important;
+}
+
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Dark mode base transition */
+html.dark body {
+  background-color: #0b1120;
+  color: #f1f5f9;
+}
