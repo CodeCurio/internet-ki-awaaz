@@ -64,16 +64,52 @@ export default function ContactPage() {
     });
 
     setLoading(false);
+    const refId = res.referenceId || `IKA-MSG-${Date.now().toString().slice(-4)}`;
+
     if (res.success) {
-      setReferenceId(res.referenceId || `IKA-MSG-${Date.now().toString().slice(-4)}`);
+      setReferenceId(refId);
       setSubmitted(true);
+
+      // Build structured WhatsApp message
+      const waLines = [
+        `*नमस्ते इंटरनेट की आवाज़ संपादकीय टीम,*`,
+        `मैंने पोर्टल पर संपर्क फॉर्म सबमिट किया है:`,
+        `📌 *संदर्भ संख्या:* ${refId}`,
+        `👤 *नाम:* ${fullName.trim()}`,
+        `📱 *मोबाइल:* ${phoneNumber.trim()}`,
+        city.trim() ? `📍 *स्थान / तहसील:* ${city.trim()}` : null,
+        email.trim() ? `✉️ *ईमेल:* ${email.trim()}` : null,
+        `📂 *विषय:* ${subject}`,
+        `📝 *संदेश / समाचार विवरण:*`,
+        message.trim(),
+      ].filter(Boolean);
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=917905895936&text=${encodeURIComponent(
+        waLines.join('\n')
+      )}`;
+
+      // Directly redirect to WhatsApp
+      window.open(whatsappUrl, '_blank');
     } else {
       setErrorMsg(res.error || 'संदेश भेजने में विफल। कृपया पुनः प्रयास करें।');
     }
   };
 
-  const whatsappShareUrl = `https://wa.me/917905895936?text=${encodeURIComponent(
-    `नमस्ते इंटरनेट की आवाज़ टीम,\nमैंने संपर्क फॉर्म सबमिट किया है।\nसंदर्भ आईडी: ${referenceId}\nनाम: ${fullName}\nमोबाइल: ${phoneNumber}\nविषय: ${subject}\nसंदेश: ${message}`
+  const whatsappShareUrl = `https://api.whatsapp.com/send?phone=917905895936&text=${encodeURIComponent(
+    [
+      `*नमस्ते इंटरनेट की आवाज़ संपादकीय टीम,*`,
+      `मैंने पोर्टल पर संपर्क फॉर्म सबमिट किया है:`,
+      `📌 *संदर्भ संख्या:* ${referenceId || 'IKA-MSG'}`,
+      `👤 *नाम:* ${fullName}`,
+      `📱 *मोबाइल:* ${phoneNumber}`,
+      city ? `📍 *स्थान / तहसील:* ${city}` : null,
+      email ? `✉️ *ईमेल:* ${email}` : null,
+      `📂 *विषय:* ${subject}`,
+      `📝 *संदेश / समाचार विवरण:*`,
+      message,
+    ]
+      .filter(Boolean)
+      .join('\n')
   )}`;
 
   return (

@@ -9,7 +9,7 @@ export default async function PublicLayout({ children }: { children: React.React
   const breakingNews = await getActiveBreakingNews();
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <TopUtilityBar />
       <Masthead />
       <StickyNav />

@@ -254,17 +254,6 @@ export function Footer() {
                 </a>
               </div>
             </div>
-
-            {/* Staff CMS Access */}
-            <div className="pt-2">
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-1.5 text-xs bg-slate-800/90 hover:bg-slate-700 text-slate-200 px-3.5 py-1.5 rounded-xl transition-colors border border-slate-700 font-semibold"
-              >
-                <ShieldCheck size={14} className="text-red-500" />
-                <span>संपादकीय स्टाफ सीएमएस लॉगिन</span>
-              </Link>
-            </div>
           </div>
         </div>
       </div>

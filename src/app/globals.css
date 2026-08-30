@@ -244,8 +244,157 @@ body > .skiptranslate:first-child {
   box-shadow: none !important;
 }
 
-/* Dark mode base transition */
-html.dark body {
-  background-color: #0b1120;
-  color: #f1f5f9;
+/* ==========================================================================
+   Comprehensive Full-Website Dark Mode (रात्रि मोड) Design System
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
 }
+
+html.dark body {
+  background-color: #090d16 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Base Surfaces & Backgrounds */
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/60,
+html.dark .bg-slate-50\/80 {
+  background-color: #090d16 !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95 {
+  background-color: #111827 !important;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-slate-100\/80,
+html.dark .bg-slate-100\/60 {
+  background-color: #1a2234 !important;
+}
+
+/* Borders */
+html.dark .border-slate-200,
+html.dark .border-slate-100,
+html.dark .border-slate-300,
+html.dark .border-slate-200\/80,
+html.dark .border-slate-200\/60 {
+  border-color: #1f293d !important;
+}
+
+/* Primary & Secondary Texts */
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-950 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+/* Accent Badges and Containers in Dark Mode */
+html.dark .bg-red-50 {
+  background-color: rgba(185, 28, 28, 0.18) !important;
+  border-color: rgba(185, 28, 28, 0.35) !important;
+  color: #fca5a5 !important;
+}
+
+html.dark .bg-blue-50 {
+  background-color: rgba(37, 99, 235, 0.18) !important;
+  border-color: rgba(37, 99, 235, 0.35) !important;
+  color: #93c5fd !important;
+}
+
+html.dark .bg-emerald-50 {
+  background-color: rgba(5, 150, 105, 0.18) !important;
+  border-color: rgba(5, 150, 105, 0.35) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .bg-amber-50,
+html.dark .bg-amber-50\/40 {
+  background-color: rgba(217, 119, 6, 0.15) !important;
+  border-color: rgba(217, 119, 6, 0.3) !important;
+  color: #fde68a !important;
+}
+
+html.dark .bg-pink-50 {
+  background-color: rgba(219, 39, 119, 0.18) !important;
+  border-color: rgba(219, 39, 119, 0.35) !important;
+  color: #f9a8d4 !important;
+}
+
+html.dark .bg-stone-50 {
+  background-color: rgba(120, 113, 108, 0.18) !important;
+  border-color: rgba(120, 113, 108, 0.35) !important;
+  color: #e7e5e4 !important;
+}
+
+/* Inputs, Textareas, Selects */
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="tel"],
+html.dark input[type="password"],
+html.dark input[type="search"],
+html.dark textarea,
+html.dark select {
+  background-color: #111827 !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Article Prose Typography in Dark Mode */
+html.dark .prose {
+  color: #e2e8f0 !important;
+}
+
+html.dark .prose p,
+html.dark .prose li {
+  color: #cbd5e1 !important;
+}
+
+html.dark .prose h1,
+html.dark .prose h2,
+html.dark .prose h3,
+html.dark .prose h4,
+html.dark .prose strong,
+html.dark .prose b {
+  color: #f8fafc !important;
+}
+
+html.dark .prose blockquote {
+  background-color: #111827 !important;
+  color: #cbd5e1 !important;
+  border-left-color: #ef4444 !important;
+}
+
+html.dark .prose a {
+  color: #f87171 !important;
+}
+
+html.dark .prose a:hover {
+  color: #fca5a5 !important;
+}
+
+/* Smooth Transitions for seamless theme toggling */
+body, header, nav, main, footer, article, section, div, button {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+

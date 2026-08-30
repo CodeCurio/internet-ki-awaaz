@@ -46,7 +46,7 @@ export function TopUtilityBar() {
           </span>
         </div>
 
-        {/* Right: Helpline & Staff Login */}
+        {/* Right: Helpline & Contact */}
         <div className="flex items-center gap-3 sm:gap-4">
           <a
             href="tel:07905895936"
@@ -61,13 +61,12 @@ export function TopUtilityBar() {
           <span className="text-slate-700 hidden sm:inline">|</span>
 
           <Link
-            href="/login"
-            className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors font-medium hover:underline text-xs notranslate"
+            href="/contact"
+            className="flex items-center gap-1 text-slate-300 hover:text-white transition-colors font-medium hover:underline text-xs notranslate"
             translate="no"
             suppressHydrationWarning
           >
-            <ShieldCheck size={14} className="text-red-400" />
-            <span suppressHydrationWarning>स्टाफ लॉगिन</span>
+            <span suppressHydrationWarning>संपर्क करें</span>
           </Link>
         </div>
       </div>
